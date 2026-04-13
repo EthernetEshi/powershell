@@ -36,7 +36,7 @@ foreach ($Server in $Servers) {
             $CheckForUser = (Get-LocalUser).Name -contains 'ansible_user'
             if($CheckForUser -eq $false) {
                 try {
-                    New-LocalUser -Name 'ansible_user' -Password $Using:AnsibleUserPassword -Description 'Windows user for access via Ansible'
+                    New-LocalUser -Name 'ansible_user' -Password $Using:AnsibleUserPassword -Description 'Windows user for access via Ansible' -PasswordNeverExpires
                     Add-LocalGroupMember -Group 'Administrators' -Member 'ansible_user' -ErrorAction Stop
                     Write-Host "Added ansible_user to Administrators." -ForegroundColor Green
                     Add-LocalGroupMember -Group 'OpenSSH Users' -Member 'ansible_user' -ErrorAction Stop
