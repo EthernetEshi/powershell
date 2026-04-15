@@ -67,14 +67,11 @@ foreach ($Server in $Servers) {
 
 } # end of foreach 1
 
-if($Error)
-{
+if($Error) {
     Write-Host "======= The script has finished! ======="
     Write-Host "======= Warning! Errors have occured! =======" -BackgroundColor Red
     Read-Host "Press enter to exit"
-}
-else
-{
+} else {
     Write-Host "======= The script has finished successfully! =======" -ForegroundColor Green
     Read-Host "Press enter to exit"
 }
