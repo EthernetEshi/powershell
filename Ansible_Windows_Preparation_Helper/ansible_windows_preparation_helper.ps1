@@ -41,18 +41,23 @@ foreach ($Server in $Servers) {
             $CheckForUser = (Get-LocalUser).Name -contains $Using:AnsibleUserName
             if($CheckForUser -eq $false) {
                 try {
-                    New-LocalUser -Name $Using:AnsibleUserName -Password $Using:AnsibleUserPassword -Description 'Windows user for access via Ansible'
+                    New-LocalUser -Name $Using:AnsibleUserName -Password $Using:AnsibleUserPassword -Description 'Windows user for access via Ansible' | Out-Null
                     Add-LocalGroupMember -Group 'Administrators' -Member $Using:AnsibleUserName -ErrorAction Stop
-                    Write-Host "Added $Using:AnsibleUserName to Administrators." -ForegroundColor Green
                     Add-LocalGroupMember -Group 'OpenSSH Users' -Member $Using:AnsibleUserName -ErrorAction Stop
-                    Write-Host "Added $Using:AnsibleUserName to OpenSSH Users." -ForegroundColor Green
                     Add-LocalGroupMember -Group 'Remote Management Users' -Member $Using:AnsibleUserName -ErrorAction Stop
-                    Write-Host "Added $Using:AnsibleUserName to Remote Management Users." -ForegroundColor Green
+                    
                 } catch {
                     Write-Host "Error while adding $Using:AnsibleUserName to a group: $_" -ForegroundColor Red
+                } finally {
+                    if(-not ($Error)) {
+                        Write-Host "Created user $Using:AnsibleUserName" -ForegroundColor Green
+                        Write-Host "Added $Using:AnsibleUserName to Administrators." -ForegroundColor Green
+                        Write-Host "Added $Using:AnsibleUserName to OpenSSH Users." -ForegroundColor Green
+                        Write-Host "Added $Using:AnsibleUserName to Remote Management Users." -ForegroundColor Green
+                    }
                 }
             } else {
-                Write-Host "$Using:AnsibleUserName already exists. Moving on... `n"
+                Write-Host "$Using:AnsibleUserName already exists. Moving on ... `n"
             }
             Write-Host "[STEP 2] Disabling administrator token filter policy ..." -ForegroundColor Cyan
             try {
