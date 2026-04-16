@@ -21,7 +21,10 @@ Write-Host "
 ╚═╝  ╚═╝╚══════╝╚══════╝╚═╝     ╚══════╝╚═╝  ╚═╝                                       
                                                                                                                                                       
 "
-$creds = Get-Credential
+Write-Host "Enter your PowerShell remoting credentials: "
+$user = Read-Host "User"
+$pass = Read-Host "Password" -AsSecureString
+$creds = [PSCredential]::new($user, $pass)
 # defining file paths
 $ServerListPath = Join-Path $PSScriptRoot 'remote_hosts.txt'
 # defining parameters
