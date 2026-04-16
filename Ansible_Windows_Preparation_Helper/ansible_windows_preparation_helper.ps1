@@ -43,7 +43,7 @@ foreach ($Server in $Servers) {
                     Add-LocalGroupMember -Group 'Administrators' -Member 'ansible_user' -ErrorAction Stop
                     Write-Host "Added ansible_user to Administrators." -ForegroundColor Green
                     Add-LocalGroupMember -Group 'OpenSSH Users' -Member 'ansible_user' -ErrorAction Stop
-                    Write-Host "Added ansible_user OpenSSH Users." -ForegroundColor Green
+                    Write-Host "Added ansible_user to OpenSSH Users." -ForegroundColor Green
                     Add-LocalGroupMember -Group 'Remote Management Users' -Member 'ansible_user' -ErrorAction Stop
                     Write-Host "Added ansible_user to Remote Management Users." -ForegroundColor Green
                     # Remove-LocalGroupMember -Group 'Users' -Member 'ansible_user' -ErrorAction Stop
